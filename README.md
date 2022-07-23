@@ -1,5 +1,20 @@
 Data Structures and Algorithms
 
-Motivation
+Content
 ----------
-Practice
+1. algorithms
+   - searching
+     - binary search
+   - sorting
+   - graph theory
+     - shortest paths
+
+2. data structures
+   - queue
+   - stack
+   - hash table
+   - tree
+     - binary tree
+     - binary search tree
+     - heap tree
+     - red black tree
