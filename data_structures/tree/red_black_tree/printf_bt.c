@@ -25,7 +25,11 @@ void print2DUtil(const struct rbtree_node *root, int space)
 	printf("\n");
 	for (int i = COUNT; i < space; i++)
 		printf(" ");
-	printf("%d\n", root->value);
+
+	if (root->color == RED)
+		printf(TEXT_COLOR_RED "%d\n" TEXT_COLOR_END, root->value);
+	else
+		printf("%d\n", root->value);
 
 	// Process left child
 	print2DUtil(root->left, space);
