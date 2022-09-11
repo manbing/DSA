@@ -6,6 +6,8 @@ Content
    - searching
      - binary search
    - sorting
+     - merge sort
+     - quick sort
    - graph theory
      - shortest paths
 
