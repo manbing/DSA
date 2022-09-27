@@ -27,9 +27,9 @@ void print2DUtil(const struct rbtree_node *root, int space)
 		printf(" ");
 
 	if (root->color == RED)
-		printf(TEXT_COLOR_RED "%d\n" TEXT_COLOR_END, root->value);
+		printf(TEXT_COLOR_RED "%d(%d)\n" TEXT_COLOR_END, root->value, root->null);
 	else
-		printf("%d\n", root->value);
+		printf("%d(%d)\n", root->value, root->null);
 
 	// Process left child
 	print2DUtil(root->left, space);
@@ -38,6 +38,9 @@ void print2DUtil(const struct rbtree_node *root, int space)
 // Wrapper over print2DUtil()
 void print2D(const struct rbtree_node *root)
 {
+	if (!root)
+		return;
+
 	// Pass initial space count as 0
 	print2DUtil(root, 0);
 }
