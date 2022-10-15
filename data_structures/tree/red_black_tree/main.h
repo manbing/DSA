@@ -5,7 +5,6 @@
 #define TEXT_COLOR_RED "\033[0;31m"
 #define TEXT_COLOR_END "\033[0;m"
 
-
 enum menu_index { INSERT, DELETE, TRAVERSE, SELF_TEST, EXIT, MAX };
 
 enum color {
@@ -15,12 +14,12 @@ enum color {
 };
 
 enum direction {
-        DIR_NONE,
-        DIR_LEFT,
-        DIR_RIGHT,
+	DIR_NONE,
+	DIR_LEFT,
+	DIR_RIGHT,
 };
 
-#define child_dir(N) ( N == (N->parent)->right ? DIR_RIGHT : DIR_LEFT )
+#define child_dir(N) (N == (N->parent)->right ? DIR_RIGHT : DIR_LEFT)
 
 enum rbt_delete_case {
 	RBT_DEL_CASE_VALID,
@@ -40,6 +39,5 @@ struct rbtree_node {
 	struct rbtree_node *left;
 	struct rbtree_node *right;
 };
-
 
 #endif /* !_MAIN_H_ */

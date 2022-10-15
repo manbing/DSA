@@ -27,7 +27,8 @@ void print2DUtil(const struct rbtree_node *root, int space)
 		printf(" ");
 
 	if (root->color == RED)
-		printf(TEXT_COLOR_RED "%d(%d)\n" TEXT_COLOR_END, root->value, root->null);
+		printf(TEXT_COLOR_RED "%d(%d)\n" TEXT_COLOR_END, root->value,
+		       root->null);
 	else
 		printf("%d(%d)\n", root->value, root->null);
 
