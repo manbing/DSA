@@ -2,46 +2,42 @@
 #include <stdlib.h>
 #include <string.h>
 
-static void merge(int *list, int left, int mid, int right)
+static void merge_sort(int *obj, int left, int right)
 {
-	int *list_l = list + left;
-	int list_l_len = mid - left + 1;
+	int i = 0, j = 0, k = 0;
+	int len = right - left;
+	int size = len + 1;
+	int mid = (right + left) / 2;
+	int *tmp = NULL;
 
-	int *list_r = list + mid + 1;
-	int list_r_len = right - mid;
+	if (left == right)
+		return;
 
-	int tmp_size = right - left + 1;
-	int *tmp = (int *)calloc(tmp_size, sizeof(int));
-	int i = 0, j = 0, index = 0;
+	merge_sort(obj, left, mid);
+	merge_sort(obj, mid + 1, right);
 
-	while (i < list_l_len || j < list_r_len) {
-		if ((i < list_l_len && list_l[i] <= list_r[j]) ||
-		    (j >= list_r_len)) {
-			tmp[index++] = list_l[i++];
-		} else if ((j < list_r_len && list_l[i] > list_r[j]) ||
-			   (i >= list_l_len)) {
-			tmp[index++] = list_r[j++];
-		}
+	tmp = (int *)calloc(size, sizeof(int));
+
+	i = left;
+	j = mid + 1;
+	while (i <= mid || j <= right) {
+		if (i > mid)
+			tmp[k++] = obj[j++];
+		else if (j > right)
+			tmp[k++] = obj[i++];
+		else if (obj[i] < obj[j])
+			tmp[k++] = obj[i++];
+		else
+			tmp[k++] = obj[j++];
 	}
 
-	memcpy(list_l, tmp, tmp_size * sizeof(int));
+	memcpy(&obj[left], tmp, size * sizeof(int));
 	free(tmp);
 }
 
-static void merge_sort(int *list, int left, int right)
+static void sort(int *obj, int obj_size)
 {
-	int mid = (left + right) / 2;
-
-	if (left < right) {
-		merge_sort(list, left, mid);
-		merge_sort(list, mid + 1, right);
-		merge(list, left, mid, right);
-	}
-}
-
-static void sort(int *list, int size)
-{
-	merge_sort(list, 0, size - 1);
+	merge_sort(obj, 0, obj_size - 1);
 }
 
 static void show_list(int *list, int size)
