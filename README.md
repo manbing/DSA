@@ -8,6 +8,7 @@ Content
    - sorting
      - merge sort
      - quick sort
+     - merge sort
    - graph theory
      - shortest paths
 

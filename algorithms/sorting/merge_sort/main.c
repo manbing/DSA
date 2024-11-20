@@ -1,66 +1,63 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 
-static void merge_sort(int *obj, int left, int right)
+#define LCHID(x) (x * 2 + 1)
+#define RCHID(x) (x * 2 + 2)
+#define PARENT(x) ((x - 1) / 2)
+
+static void swap(int *a, int *b)
 {
-	int i = 0, j = 0, k = 0;
-	int len = right - left;
-	int size = len + 1;
-	int mid = (right + left) / 2;
-	int *tmp = NULL;
+	int tmp = *a;
+	*a = *b;
+	*b = tmp;
+}
 
-	if (left == right)
-		return;
+static void sift_down(int i, int *obj, size_t size)
+{
+	int l = LCHID(i);
+	int r = RCHID(i);
+	int largest = i;
 
-	merge_sort(obj, left, mid);
-	merge_sort(obj, mid + 1, right);
+	if (l < size && obj[l] > obj[largest])
+		largest = l;
 
-	tmp = (int *)calloc(size, sizeof(int));
+	if (r < size && obj[r] > obj[largest])
+		largest = r;
 
-	i = left;
-	j = mid + 1;
-	while (i <= mid || j <= right) {
-		if (i > mid)
-			tmp[k++] = obj[j++];
-		else if (j > right)
-			tmp[k++] = obj[i++];
-		else if (obj[i] < obj[j])
-			tmp[k++] = obj[i++];
-		else
-			tmp[k++] = obj[j++];
+	if (largest != i) {
+		swap(&obj[largest], &obj[i]);
+		sift_down(largest, obj, size);
 	}
-
-	memcpy(&obj[left], tmp, size * sizeof(int));
-	free(tmp);
 }
 
-static void sort(int *obj, int obj_size)
-{
-	merge_sort(obj, 0, obj_size - 1);
-}
-
-static void show_list(int *list, int size)
+static void heapify(int *obj, size_t size)
 {
 	int i = 0;
 
-	for (i = 0; i < size; i++) {
-		printf("%d, ", list[i]);
-	}
+	for (i = (size - 1) / 2; i >= 0; i--)
+		sift_down(i, obj, size);
 }
 
 int main(void)
 {
-	int list[] = { 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 };
+	int nums[] = { 9, 8, 7, 6, 5, 4, 3, 2, 1 };
+	int ans[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+	int numsSize = sizeof(nums) / sizeof(nums[0]);
+	int end = 0;
 
-	printf("Before sort:\n");
-	show_list(list, sizeof(list) / sizeof(list[0]));
+	// heapify
+	heapify(nums, numsSize);
 
-	sort(list, sizeof(list) / sizeof(list[0]));
+	end = numsSize;
+	while (end > 1) {
+		end -= 1;
+		swap(&nums[0], &nums[end]);
+		sift_down(0, nums, end);
+	}
 
-	printf("\n\nAfter sort:\n");
-	show_list(list, sizeof(list) / sizeof(list[0]));
-	printf("\n\n");
+	assert(!memcmp(nums, ans, numsSize * sizeof(int)) && "Wrong answer");
 
 	return 0;
 }
