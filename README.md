@@ -13,6 +13,7 @@ Content
 
 2. data structures
    - queue
+     - ring buffer
    - stack
    - hash table
    - tree
